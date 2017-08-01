@@ -22,5 +22,5 @@ deployment:
      commands:
      - cd $BUILDPATH && make clean && make 
      - go get github.com/tcnksm/ghr
-     - export VER=$(git -C $BUILDPATH log --date=short --pretty=format:"%ad-%h" -n1);cd $BUILDPATH/bin;mv local "$(uname -i)";tar -cvzf "${CIRCLE_PROJECT_REPONAME}_${VER}_$(uname -i).tar.gz" "$(uname -i)";rm -rf "$(uname -i)"
+     - export VER=$(git -C $BUILDPATH log --date=short --pretty=format:"%ad-%h" -n1) HW="$(uname -s)_$(uname -m)";cd $BUILDPATH/bin;mv local "${HW}";tar -cvzf "${HW}_${CIRCLE_PROJECT_REPONAME}_${VER}.tar.gz" "${HW}";rm -rf "${HW}"
      - ghr -t "${GITHUB_TOKEN}" -u "${CIRCLE_PROJECT_USERNAME}" -r "${CIRCLE_PROJECT_REPONAME}" --replace `git describe --tags` $BUILDPATH/bin/ 
